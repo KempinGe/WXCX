@@ -6,7 +6,7 @@
                     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
             <block wx:for="{{banners}}" wx:key="id">
                 <swiper-item>
-                    <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image" width="750rpx" height="562.5rpx"/>
+                    <image bindtap="tapBanner" data-id="{{item.Id}}" src="{{item.picUrl}}" class="slide-image" width="750rpx" height="562.5rpx"/>
                 </swiper-item>
             </block>
         </swiper>
@@ -57,13 +57,13 @@
     </view>
     <view class="goods-container">
         <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.id}}">
-           <view class="img-box">
-              <image src="{{item.pic}}_m" class="image" mode="aspectFill" lazy-load="true"/>
-           </view>
-           <view class="goods-title">{{item.name}}</view>
-           <view style='display:flex;'>
-            <view class="goods-price">¥ {{item.minPrice}}</view>
-            <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+            <view class="img-box">
+              <image src="{{item.goodsSmallImg}}" class="image" mode="aspectFill" lazy-load="true"/>
+            </view>
+            <view class="goods-title">{{item.goodsName}}</view>
+            <view style='display:flex;'>
+            <view class="goods-price">¥ {{item.goodsMinPrice}}</view>
+            <view wx:if="{{item.goodsOriginPrice && item.goodsOriginPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through'>¥ {{item.goodsOriginPrice}}</view>
            </view>           
         </view>
     </view>

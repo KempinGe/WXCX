@@ -58,15 +58,17 @@ Page({
       title: wx.getStorageSync('mallName')
     })
     wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/banner/list',
-      data: {
-        key: 'mallName'
+      url: 'http://localhost:8008/Home/BannerList',
+      data: {},
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
       },
       success: function(res) {
-        if (res.data.code == 404) {
+        if (res.data.code != 0) {
           wx.showModal({
             title: '提示',
-            content: '请在后台添加 banner 轮播图片',
+            content: res.data.errMessage,
             showCancel: false
           })
         } else {
@@ -107,12 +109,14 @@ Page({
     }
     console.log(categoryId)
     var that = this;
+
     wx.request({
-      url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/list',
-      data: {
-        categoryId: categoryId,
-        nameLike: that.data.searchInput
+      url: 'http://localhost:8008/Home/GoodsList',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
       },
+      data: {},
       success: function(res) {
         that.setData({
           goods:[],

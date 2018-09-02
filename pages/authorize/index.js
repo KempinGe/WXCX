@@ -64,23 +64,27 @@ Page({
   onShareAppMessage: function () {
   
   },
+
   bindGetUserInfo: function (e) {
     if (!e.detail.userInfo){
       return;
     }
     wx.setStorageSync('userInfo', e.detail.userInfo)
+    console.log(e)
     this.login();
   },
+
   login: function () {
     let that = this;
     let token = wx.getStorageSync('token');
     if (token) {
       wx.request({
-        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/check-token',
+        url: 'https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code',
         data: {
           token: token
         },
         success: function (res) {
+          console.log(1)
           if (res.data.code != 0) {
             wx.removeStorageSync('token')
             that.login();
@@ -88,18 +92,26 @@ Page({
             // 回到原来的地方放
             wx.navigateBack();
           }
+        },
+        fail:function(err){
+      
         }
       })
       return;
     }
+    
     wx.login({
       success: function (res) {
+        console.log('开始登陆')
+        console.log(res)
+        console.log('开始登陆')
         wx.request({
-          url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/wxapp/login',
+          url: 'https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code',
           data: {
             code: res.code
           },
           success: function (res) {
+            console.log(res)
             if (res.data.code == 10000) {
               // 去注册
               that.registerUser();
@@ -109,8 +121,8 @@ Page({
               // 登录错误
               wx.hideLoading();
               wx.showModal({
-                title: '提示',
-                content: '无法登录，请重试',
+                title: '请重试',
+                content: res.data.errmsg,
                 showCancel: false
               })
               return;

@@ -2,22 +2,28 @@
 //获取应用实例
 var app = getApp();
 Page({
-  data: {
-    remind: '加载中',
-    angle: 0,
-    userInfo: {}
-  },
-  goToIndex:function(){
-    wx.switchTab({
-      url: '/pages/index/index',
-    });
-  },
-  onLoad:function(){
+
+  onLoad: function () {
     var that = this
     wx.setNavigationBarTitle({
       title: wx.getStorageSync('mallName')
     })
   },
+  
+  data: {
+    remind: '加载中',
+    angle: 0,
+    userInfo: {}
+  },
+
+  goToIndex:function(){
+    wx.switchTab({
+      url: '/pages/index/index',
+    });
+  },
+
+ 
+
   onShow:function(){
     let that = this
     let userInfo = wx.getStorageSync('userInfo')
