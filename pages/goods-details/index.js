@@ -54,7 +54,11 @@ Page({
       } 
     })
     wx.request({
-      url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/detail',
+      url: 'http://localhost:8008/Goods/Detai',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
       data: {
         id: e.id
       },

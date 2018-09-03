@@ -28,6 +28,7 @@ Page({
     });
     this.getGoodsList(this.data.activeCategoryId);
   },
+
   //事件处理函数
   swiperchange: function(e) {
       //console.log(e.detail.current)
@@ -40,7 +41,9 @@ Page({
       url:"/pages/goods-details/index?id="+e.currentTarget.dataset.id
     })
   },
+
   tapBanner: function(e) {
+    console.log(e)
     if (e.currentTarget.dataset.id != 0) {
       wx.navigateTo({
         url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
@@ -78,9 +81,16 @@ Page({
         }
       }
     }),
+
     wx.request({
-      url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/category/all',
+      url: 'http://localhost:8008/Home/CotegoriList',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {},
       success: function(res) {
+        console.log(res)
         var categories = [{id:0, name:"全部"}];
         if (res.data.code == 0) {
           for (var i = 0; i < res.data.data.length; i++) {
@@ -141,9 +151,13 @@ Page({
   getCoupons: function () {
     var that = this;
     wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/coupons',
+      url: 'http://localhost:8008/Home/CouponList',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
       data: {
-        type: ''
+        // type: ''
       },
       success: function (res) {
         if (res.data.code == 0) {
@@ -160,8 +174,8 @@ Page({
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/fetch',
       data: {
-        id: e.currentTarget.dataset.id,
-        token: wx.getStorageSync('token')
+        // id: e.currentTarget.dataset.id,
+        // token: wx.getStorageSync('token')
       },
       success: function (res) {
         if (res.data.code == 20001 || res.data.code == 20002) {
@@ -227,7 +241,11 @@ Page({
   getNotice: function () {
     var that = this;
     wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/notice/list',
+      url: 'http://localhost:8008/Home/NoticeList',
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
       data: { pageSize :5},
       success: function (res) {
         if (res.data.code == 0) {
