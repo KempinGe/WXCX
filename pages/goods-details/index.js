@@ -54,16 +54,18 @@ Page({
       } 
     })
     wx.request({
-      url: 'http://localhost:8008/Goods/Detai',
+      url: 'http://localhost:8008/Goods/Detail',
       method: 'POST',
       header: {
         'content-type': 'application/json'
       },
       data: {
-        id: e.id
+        goodsId: e.id
       },
       success: function(res) {
         var selectSizeTemp = "";
+        console.log('商品详情')
+        console.log(res)
         if (res.data.data.properties) {
           for(var i=0;i<res.data.data.properties.length;i++){
             selectSizeTemp = selectSizeTemp + " " + res.data.data.properties[i].name;
